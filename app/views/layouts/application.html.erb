@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tokyo</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= link_to "Home", root_path %>
+    <% if user_signed_in? %>
+    <%= current_user.email %>
+    <%= link_to "Posts", posts_path %>
+    <% if current_user.payment != true %>
+    <%= link_to "Subscribe", "/charges/new" %>
+    <% else %>
+    <%= link_to "Unsubscribe", "/unsubscribe", method: :post %>
+    <% end %>
+    <%= link_to "Signout", destroy_user_session_path, method: :delete %>
+    <% else %>
+    <%= link_to "Signin", new_user_session_path %>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
